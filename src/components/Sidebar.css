@@ -32,3 +32,30 @@
   color: white;
   font-size: 18px;
 }
+
+.sidebar .options {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  grid-gap: 12px;
+  padding: 12px;
+}
+
+.sidebar .option {
+  height: 80px;
+  width: 80px;
+  background: #f5f5f5;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 80px;
+  transform: rotate(0);
+  transition: transform 0.2s;
+  box-shadow: 0px 0px 4px 2px #eceaea
+}
+
+.sidebar .option:hover {
+  transform: rotate(10deg);
+}

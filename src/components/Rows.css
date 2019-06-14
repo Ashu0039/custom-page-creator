@@ -1,0 +1,18 @@
+.rows {
+  padding: 24px;
+}
+
+.row {
+  display: flex;
+  padding: 12px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.row:hover {
+  border: 1px solid lightcoral;
+}
+
+.row .column {
+  flex: 1;
+}
