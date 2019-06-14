@@ -4,9 +4,9 @@ import Element from './elements/Element';
 
 import './Rows.css';
 
-const Column = ({ column }) => (
+const Column = ({ column, ...rest }) => (
   <div className="column">
-    <Element {...column.element} />
+    <Element {...rest} {...column.element} />
   </div>
 )
 
@@ -16,10 +16,10 @@ const AddNewRow = ({ handleClick }) => (
   </div>
 );
 
-const Row = ({ row }) => (
+const Row = ({ row, pos }) => (
   <div className="row">
     {
-      row.columns.map(c => <Column column={c} key={c.id} />)
+      row.columns.map((c, index) => <Column columnPos={index} rowPos={pos} column={c} key={c.id} />)
     }
   </div>
 );
@@ -27,7 +27,7 @@ const Row = ({ row }) => (
 const Rows = ({ rows, showAddRow }) => (
   <div className="rows">
     {
-      rows.length > 0 ? rows.map(r => <Row row={r} key={r.id} />) : <AddNewRow handleClick={showAddRow} />
+      rows.length > 0 ? rows.map((r, index) => <Row row={r} pos={index} key={r.id} />) : <AddNewRow handleClick={showAddRow} />
     }
   </div>
 );

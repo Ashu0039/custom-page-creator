@@ -181,11 +181,15 @@ class Editor extends Component {
     this.closeAddElement();
   }
 
+  elementClicked = ({ type, rowPos, columnPos, data }) => {
+    console.log('element clicked --> ', type, data, rowPos, columnPos);
+  }
+
   render() {
     const { showAddRow, showAddElement, rows } = this.state;
 
     return (
-      <EditorContext.Provider value={{ addElementClicked: this.toggleAddElement }}>
+      <EditorContext.Provider value={{ addElementClicked: this.toggleAddElement, elementClicked: this.elementClicked }}>
         <div className="editor">
           <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
           <Rows rows={rows} showAddRow={this.toggleAddRow} />
