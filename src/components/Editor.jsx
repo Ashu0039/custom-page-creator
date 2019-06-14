@@ -58,6 +58,7 @@ class Editor extends Component {
         ]
       }
     ],
+    addingElementAtPos: null,
   }
 
   toggleAddRow = () => {
@@ -109,46 +110,54 @@ class Editor extends Component {
   getFirstEmptyColumn = () => {
     const { rows } = this.state;
     for(let i=0; i<rows.length; i++) {
-      const { id: rowId, columns } = rows[i];
+      const { columns } = rows[i];
 
       for(let j=0; j<columns.length; j++) {
-        const { id: columnId, element } = columns[j];
+        const { element } = columns[j];
         if (element.type === EMPTY) {
-          return { row: rowId, column: columnId };
+          return { rowPos: i, columnPos: j };
         }
       }
     }
 
-    return { row: null, column: null };
+    return { rowPos: null, columnPos: null };
   }
 
   addNewElement = ({ element }) => {
-    // Find which row and column to add the heading element
-    let rowId;
-    const { row, column } = this.getFirstEmptyColumn();
-    console.log('got first empty element --> ', row, column);
+    // If we have some position to which element is being added
+    const { addingElementAtPos } = this.state;
 
-    if (row === null || column === null) {
+    if (addingElementAtPos) {
+      console.log('adding element at pos --> ', addingElementAtPos);
+      const { rowPos, columnPos } = addingElementAtPos;
+      this.addNewElementAtPos({ rowPos, columnPos, element });
+      return;
+    }
+
+    // Insert element at first empty element
+    const { rowPos, columnPos } = this.getFirstEmptyColumn();
+    console.log('got first empty element --> ', rowPos, columnPos);
+
+    // No empty element found, create a new row with single column and then insert element into it
+    if (rowPos === null || columnPos === null) {
       // new row added
       const columnElements = [element];
       this.addNewRow({ noOfColumns: 1, columnElements });
-      return;
     } else {
-      rowId = row;
+      this.addNewElementAtPos({ rowPos, columnPos, element });
+    }
+  }
+
+  addNewElementAtPos = ({ rowPos, columnPos, element }) => {
+    if (rowPos === -1 || columnPos === -1) {
+      console.error('invalid position --> ', rowPos, columnPos);
+      return;
     }
 
     const { rows } = this.state;
-    const rowPos = rows.findIndex(r => r.id === rowId);
-    if (rowPos === -1) {
-      console.error('couldnt find row --> ', rows, rowId);
-      return;
-    }
+
     const rowData = rows[rowPos];
 
-
-    console.log('got row --> ', rowData);
-    const columnPos = column === null ? 0 : rowData.columns.findIndex(c => c.id === column);
-    console.log('got column pos --> ', columnPos);
     const columnData = rowData.columns[columnPos];
     console.log('row --> ', rowData, ' column ', columnData);
 
@@ -164,7 +173,7 @@ class Editor extends Component {
 
     const updatedRows = [...rows.slice(0, rowPos), updatedRow, ...rows.slice(rowPos + 1)];
 
-    this.setState({ rows: updatedRows });
+    this.setState({ rows: updatedRows, addingElementAtPos: null });
   }
 
   addHeading = () => {
@@ -181,6 +190,10 @@ class Editor extends Component {
     this.closeAddElement();
   }
 
+  addElementClicked = ({ rowPos, columnPos }) => {
+    this.setState({ addingElementAtPos: {rowPos, columnPos} }, () => this.toggleAddElement());
+  }
+
   elementClicked = ({ type, rowPos, columnPos, data }) => {
     console.log('element clicked --> ', type, data, rowPos, columnPos);
   }
@@ -189,7 +202,7 @@ class Editor extends Component {
     const { showAddRow, showAddElement, rows } = this.state;
 
     return (
-      <EditorContext.Provider value={{ addElementClicked: this.toggleAddElement, elementClicked: this.elementClicked }}>
+      <EditorContext.Provider value={{ addElementClicked: this.addElementClicked, elementClicked: this.elementClicked }}>
         <div className="editor">
           <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
           <Rows rows={rows} showAddRow={this.toggleAddRow} />
