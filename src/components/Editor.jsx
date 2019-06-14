@@ -183,7 +183,7 @@ class Editor extends Component {
     return (
       <div className="editor">
         <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
-        <Rows rows={rows} />
+        <Rows rows={rows} showAddRow={this.toggleAddRow} />
         <AddRow open={showAddRow} closeAddRow={this.toggleAddRow} addRowWithColumns={this.addRowWithColumns} />
         <AddElement
           open={showAddElement}

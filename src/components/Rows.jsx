@@ -10,9 +10,9 @@ const Column = ({ column }) => (
   </div>
 )
 
-const AddNewRow = () => (
+const AddNewRow = ({ handleClick }) => (
   <div className="row add-new-row">
-    <button>Add new row</button>
+    <button onClick={() => handleClick()}>Add new row</button>
   </div>
 );
 
@@ -24,10 +24,10 @@ const Row = ({ row }) => (
   </div>
 );
 
-const Rows = ({ rows }) => (
+const Rows = ({ rows, showAddRow }) => (
   <div className="rows">
     {
-      rows.length > 0 ? rows.map(r => <Row row={r} key={r.id} />) : <AddNewRow />
+      rows.length > 0 ? rows.map(r => <Row row={r} key={r.id} />) : <AddNewRow handleClick={showAddRow} />
     }
   </div>
 );
