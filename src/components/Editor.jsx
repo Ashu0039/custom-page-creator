@@ -6,6 +6,7 @@ import AddRow from './AddRow';
 import AddElement from './AddElement';
 import Overlay from './Overlay';
 import { HEADING, EMPTY } from '../element_types';
+import EditingElement from './EditingElement';
 
 const newId = () => {
   return uuid();
@@ -59,6 +60,8 @@ class Editor extends Component {
       }
     ],
     addingElementAtPos: null,
+    showEditingElement: false,
+    elementToEdit: null,
   }
 
   toggleAddRow = () => {
@@ -76,7 +79,7 @@ class Editor extends Component {
   closeAddElement = () => this.setState({ showAddElement: false })
 
   overlayClicked = () => {
-    const { showAddRow, showAddElement } = this.state;
+    const { showAddRow, showAddElement, showEditingElement } = this.state;
 
     if (showAddRow) {
       this.toggleAddRow();
@@ -84,6 +87,10 @@ class Editor extends Component {
 
     if (showAddElement) {
       this.toggleAddElement();
+    }
+
+    if (showEditingElement) {
+      this.toggleEditElement();
     }
   }
 
@@ -194,12 +201,27 @@ class Editor extends Component {
     this.setState({ addingElementAtPos: {rowPos, columnPos} }, () => this.toggleAddElement());
   }
 
-  elementClicked = ({ type, rowPos, columnPos, data }) => {
+  elementClicked = (element) => {
+    const { type, rowPos, columnPos, data } = element;
     console.log('element clicked --> ', type, data, rowPos, columnPos);
+    this.setState({ elementToEdit: element });
+    this.toggleEditElement();
   }
 
+  editElementSubmitted = (value) => {
+    console.log('data submit for edit element --> ', value);
+    this.closeEditElement();
+  }
+
+  toggleEditElement = () => {
+    const { showEditingElement } = this.state;
+    this.setState({ showEditingElement: !showEditingElement });
+  }
+
+  closeEditElement = () => this.setState({ showEditingElement: false, elementToEdit: null })
+
   render() {
-    const { showAddRow, showAddElement, rows } = this.state;
+    const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit } = this.state;
 
     return (
       <EditorContext.Provider value={{ addElementClicked: this.addElementClicked, elementClicked: this.elementClicked }}>
@@ -213,7 +235,13 @@ class Editor extends Component {
             addHeading={this.addHeading}
             addImage={this.addImage}
           />
-          <Overlay show={showAddRow || showAddElement} overlayClicked={() => this.overlayClicked()} />
+          <EditingElement
+            open={showEditingElement}
+            elementToEdit={elementToEdit}
+            onSubmit={this.editElementSubmitted}
+            closeEditElement={this.closeEditElement}
+          />
+          <Overlay show={showAddRow || showAddElement || showEditingElement} overlayClicked={() => this.overlayClicked()} />
         </div>
       </EditorContext.Provider>
     );
