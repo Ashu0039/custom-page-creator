@@ -2,11 +2,11 @@ import React from 'react';
 
 import './Toolbar.css';
 
-const Toolbar = () => (
+const Toolbar = ({ addRowClicked, addElementClicked }) => (
   <div className="toolbar">
     <div className="options">
-      <button className="option">Add Row</button>
-      <button className="option">Add Element</button>
+      <button className="option" onClick={() => addRowClicked()}>Add Row</button>
+      <button className="option" onClick={() => addElementClicked()}>Add Element</button>
     </div>
   </div>
 );

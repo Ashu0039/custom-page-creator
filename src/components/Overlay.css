@@ -1,0 +1,15 @@
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  transition: opacity 0.2s, z-index 0.5s;
+  opacity: 0;
+}
+
+.overlay.show {
+  z-index: 10;
+  opacity: 0.3;
+}

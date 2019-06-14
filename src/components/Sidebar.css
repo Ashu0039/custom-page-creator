@@ -3,17 +3,18 @@
   height: 100%;
   width: 200px;
   background: white;
-  right: -200px;
+  right: -224px;
   top: 0;
   transform: translateX(0);
   transition: transform 0.2s ease;
+  z-index: 100;
 }
 
 .sidebar.open {
-  transform: translate(-200px);
+  transform: translate(-224px);
 }
 
-.sidebar .close {
+.sidebar .close-btn {
   position: absolute;
   height: 24px;
   width: 24px;
