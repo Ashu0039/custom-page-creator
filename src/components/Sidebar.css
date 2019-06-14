@@ -1,0 +1,33 @@
+.sidebar {
+  position: absolute;
+  height: 100%;
+  width: 200px;
+  background: white;
+  right: -200px;
+  top: 0;
+  transform: translateX(0);
+  transition: transform 0.2s ease;
+}
+
+.sidebar.open {
+  transform: translate(-200px);
+}
+
+.sidebar .close {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  background: lightblue;
+  color: white;
+  left: -24px;
+  border-radius: 3px 0 0 3px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.sidebar .title {
+  padding: 6px;
+  background: lightblue;
+  color: white;
+  font-size: 18px;
+}
