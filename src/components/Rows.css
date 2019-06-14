@@ -7,18 +7,21 @@
   padding: 12px;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
+  border-radius: 3px;
 }
 
 .row:hover {
-  border: 1px solid lightgreen;
+  border: 2px solid lightgreen;
 }
 
 .row .column {
   flex: 1;
-  border: 1px solid transparent;
+  padding: 6px;
+  border: 2px solid transparent;
+  border-radius: 3px;
 }
 
 .row .column:hover {
-  border: 1px solid lightcoral;
+  border: 2px solid lightcoral;
 }

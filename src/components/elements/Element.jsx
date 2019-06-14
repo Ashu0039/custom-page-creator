@@ -4,6 +4,8 @@ import Heading from './Heading';
 import Image from './Image';
 import { EditorContext } from '../Editor';
 
+import './Element.css';
+
 const DefaultElement = ({ type }) => (
   <div>Unknown type { type }</div>
 )
@@ -14,9 +16,9 @@ const EmptyElement = ({ rowPos, columnPos }) => (
       ({
         addElementClicked,
       }) => (
-        <div className="element">
-          <button className="empty" onClick={() => addElementClicked({ rowPos, columnPos })}>
-            Add Element
+        <div className="element empty">
+          <button onClick={() => addElementClicked({ rowPos, columnPos })}>
+            Add New Element
           </button>
         </div>
       )
