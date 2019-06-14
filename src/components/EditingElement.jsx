@@ -36,7 +36,7 @@ class EditingElement extends Component {
 
     switch (type) {
       case HEADING:
-        return <input type="text" value={newData} onChange={(e) => this.dataUpdated(e.target.value)} />
+        return <input className="heading" type="text" value={newData} onChange={(e) => this.dataUpdated(e.target.value)} />
       default:
         return '';
     }

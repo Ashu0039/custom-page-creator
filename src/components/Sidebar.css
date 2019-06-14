@@ -59,3 +59,24 @@
 .sidebar .option:hover {
   transform: rotate(10deg);
 }
+
+.sidebar.editing-element input.heading {
+  width: calc(100% - 48px);
+  padding: 6px 12px;
+  margin: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+
+.sidebar.editing-element button.submit {
+  padding: 6px 12px;
+  background: lightgreen;
+  color: white;
+  border: none;
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+ }

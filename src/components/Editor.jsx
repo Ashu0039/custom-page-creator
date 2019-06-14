@@ -208,8 +208,35 @@ class Editor extends Component {
     this.toggleEditElement();
   }
 
+  updateElementData = ({ rowPos, columnPos, value }) => {
+    const { rows } = this.state;
+
+    const row = rows[rowPos];
+    const { columns } = row;
+    const column = columns[columnPos];
+    const { element } = column;
+    const updatedElement = { ...element, data: value };
+
+    const updatedColumn = { ...column, element: updatedElement };
+
+    const updatedRow = { ...row, columns: [...columns.slice(0, columnPos), updatedColumn, ...columns.slice(columnPos + 1)] };
+
+    const updatedRows = [...rows.slice(0, rowPos), updatedRow, ...rows.slice(rowPos + 1)];
+
+    this.setState({ rows: updatedRows });
+  }
+
   editElementSubmitted = (value) => {
     console.log('data submit for edit element --> ', value);
+    const { elementToEdit } = this.state;
+    const { type, columnPos, rowPos } = elementToEdit;
+
+    switch (type) {
+      case HEADING:
+        this.updateElementData({ columnPos, rowPos, value });
+        break;
+      default:
+    }
     this.closeEditElement();
   }
 
