@@ -2,13 +2,26 @@ import React from 'react';
 import { HEADING, EMPTY, IMAGE } from '../../element_types';
 import Heading from './Heading';
 import Image from './Image';
+import { EditorContext } from '../Editor';
 
 const DefaultElement = ({ type }) => (
   <div>Unknown type { type }</div>
 )
 
 const EmptyElement = () => (
-  <div className="element"><button className="empty">Add Element</button></div>
+  <EditorContext.Consumer>
+    {
+      ({
+        addElementClicked,
+      }) => (
+        <div className="element">
+          <button className="empty" onClick={() => addElementClicked()}>
+            Add Element
+          </button>
+        </div>
+      )
+    }
+  </EditorContext.Consumer>
 )
 
 const Element = ({ type, ...others }) => {

@@ -36,6 +36,10 @@ const preFilledColumns = (columnElements) => {
   return columns;
 };
 
+export const EditorContext = React.createContext({
+  addElementClicked: () => {},
+});
+
 class Editor extends Component {
   state = {
     showAddRow: false,
@@ -181,18 +185,20 @@ class Editor extends Component {
     const { showAddRow, showAddElement, rows } = this.state;
 
     return (
-      <div className="editor">
-        <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
-        <Rows rows={rows} showAddRow={this.toggleAddRow} />
-        <AddRow open={showAddRow} closeAddRow={this.toggleAddRow} addRowWithColumns={this.addRowWithColumns} />
-        <AddElement
-          open={showAddElement}
-          closeAddElement={this.toggleAddElement}
-          addHeading={this.addHeading}
-          addImage={this.addImage}
-        />
-        <Overlay show={showAddRow || showAddElement} overlayClicked={() => this.overlayClicked()} />
-      </div>
+      <EditorContext.Provider value={{ addElementClicked: this.toggleAddElement }}>
+        <div className="editor">
+          <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
+          <Rows rows={rows} showAddRow={this.toggleAddRow} />
+          <AddRow open={showAddRow} closeAddRow={this.toggleAddRow} addRowWithColumns={this.addRowWithColumns} />
+          <AddElement
+            open={showAddElement}
+            closeAddElement={this.toggleAddElement}
+            addHeading={this.addHeading}
+            addImage={this.addImage}
+          />
+          <Overlay show={showAddRow || showAddElement} overlayClicked={() => this.overlayClicked()} />
+        </div>
+      </EditorContext.Provider>
     );
   }
 }
