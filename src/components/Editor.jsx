@@ -217,7 +217,7 @@ class Editor extends Component {
     this.setState({ addingElementAtPos: {rowPos, columnPos} }, () => this.toggleAddElement());
   }
 
-  elementClicked = (element) => {
+  editElementClicked = (element) => {
     const { type, rowPos, columnPos, data } = element;
     console.log('element clicked --> ', type, data, rowPos, columnPos);
     this.setState({ elementToEdit: element });
@@ -263,11 +263,22 @@ class Editor extends Component {
 
   closeEditElement = () => this.setState({ showEditingElement: false, elementToEdit: null })
 
+  deleteElementClicked = (element) => {
+    const { rowPos, columnPos } = element;
+    console.log('delete element clicked --> ', rowPos, columnPos);
+  }
+
   render() {
     const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit } = this.state;
 
     return (
-      <EditorContext.Provider value={{ addElementClicked: this.addElementClicked, elementClicked: this.elementClicked }}>
+      <EditorContext.Provider
+        value={{ 
+          addElementClicked: this.addElementClicked,
+          editElementClicked: this.editElementClicked,
+          deleteElementClicked: this.deleteElementClicked,
+        }}
+      >
         <div className="editor">
           <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
           <Rows rows={rows} showAddRow={this.toggleAddRow} />

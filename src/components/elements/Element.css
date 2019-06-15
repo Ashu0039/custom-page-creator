@@ -1,3 +1,7 @@
+.element {
+  padding: 6px 0;
+}
+
 .element.empty {
   background-color: #ffcccc;
   padding: 6px 0;
@@ -24,4 +28,33 @@
 .element.empty button:hover {
   background: white;
   color: lightcoral;
+}
+
+.element:hover .element-options {
+  z-index: inherit;
+}
+
+.element .element-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: -1;
+  background: lightcoral;
+  color: white;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 3px 0 0 3px;
+}
+
+.element .element-options > svg {
+  padding: 0 8px;
+  border-right: 1px solid;
+}
+
+.element .element-options > svg:last-child {
+  border-right: none;
 }
