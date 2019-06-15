@@ -7,6 +7,10 @@
 .App .header {
   height: 72px;
   background: rgb(32, 158, 231);
+  line-height: 72px;
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
 }
 
 .App .editor {

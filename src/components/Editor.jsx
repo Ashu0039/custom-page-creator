@@ -263,9 +263,40 @@ class Editor extends Component {
 
   closeEditElement = () => this.setState({ showEditingElement: false, elementToEdit: null })
 
+  deleteElementAtPos = ({ rowPos, columnPos }) => {
+    if (rowPos === -1 || columnPos === -1) {
+      console.error('invalid position --> ', rowPos, columnPos);
+      return;
+    }
+
+    const { rows } = this.state;
+
+    const rowData = rows[rowPos];
+
+    const columnData = rowData.columns[columnPos];
+    // console.log('row --> ', rowData, ' column ', columnData);
+
+    const newEmptyElement = emptyElement();
+
+    const updatedColumnData = {
+      ...columnData,
+      element: newEmptyElement,
+    };
+
+    const updatedRow = {
+      ...rowData,
+      columns: [...rowData.columns.slice(0, columnPos), updatedColumnData, ...rowData.columns.slice(columnPos + 1)],
+    };
+
+    const updatedRows = [...rows.slice(0, rowPos), updatedRow, ...rows.slice(rowPos + 1)];
+
+    this.setState({ rows: updatedRows });
+  }
+
   deleteElementClicked = (element) => {
     const { rowPos, columnPos } = element;
     console.log('delete element clicked --> ', rowPos, columnPos);
+    this.deleteElementAtPos({ rowPos, columnPos });
   }
 
   render() {

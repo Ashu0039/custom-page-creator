@@ -17,7 +17,7 @@
 
 .row .column {
   flex: 1;
-  padding: 0 6px;
+  padding: 6px;
   border: 2px solid transparent;
   border-radius: 3px;
   position: relative;
