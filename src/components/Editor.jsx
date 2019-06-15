@@ -7,6 +7,7 @@ import AddElement from './AddElement';
 import Overlay from './Overlay';
 import { HEADING, EMPTY, IMAGE } from '../element_types';
 import EditingElement from './EditingElement';
+import DropZone from './DropZone';
 
 const newId = () => {
   return uuid();
@@ -149,18 +150,24 @@ class Editor extends Component {
       return;
     }
 
-    // Insert element at first empty element
-    const { rowPos, columnPos } = this.getFirstEmptyColumn();
-    console.log('got first empty element --> ', rowPos, columnPos);
-
-    // No empty element found, create a new row with single column and then insert element into it
-    if (rowPos === null || columnPos === null) {
-      // new row added
+    // If no particular position to add element, then create a new row just for it
       const columnElements = [element];
       this.addNewRow({ noOfColumns: 1, columnElements });
-    } else {
-      this.addNewElementAtPos({ rowPos, columnPos, element });
-    }
+
+
+    // No unintended logics
+    // // Insert element at first empty element
+    // const { rowPos, columnPos } = this.getFirstEmptyColumn();
+    // console.log('got first empty element --> ', rowPos, columnPos);
+
+    // // No empty element found, create a new row with single column and then insert element into it
+    // if (rowPos === null || columnPos === null) {
+    //   // new row added
+    //   const columnElements = [element];
+    //   this.addNewRow({ noOfColumns: 1, columnElements });
+    // } else {
+    //   this.addNewElementAtPos({ rowPos, columnPos, element });
+    // }
   }
 
   addNewElementAtPos = ({ rowPos, columnPos, element }) => {
@@ -320,7 +327,12 @@ class Editor extends Component {
   }
 
   elementDropped = (elementDroppedAt) => {
-    this.setState({ addingElementAtPos: elementDroppedAt }, () => this.addDroppedElement());
+    const { dropZone, rowPos, columnPos } = elementDroppedAt;
+    if (dropZone) {
+      this.addDroppedElement();
+    } else if(rowPos && columnPos) {
+      this.setState({ addingElementAtPos: elementDroppedAt }, () => this.addDroppedElement());
+    }
   }
 
   elementIsDraggedOver = ({ rowPos, columnPos }) => {
@@ -363,6 +375,9 @@ class Editor extends Component {
             onSubmit={this.editElementSubmitted}
             closeEditElement={this.closeEditElement}
           />
+          {
+            elementDragged && <DropZone elementDropped={this.elementDropped} elementIsDraggedOver={this.elementIsDraggedOver} />
+          }
           <Overlay show={showAddRow || showAddElement || showEditingElement} overlayClicked={() => this.overlayClicked()} />
         </div>
       </EditorContext.Provider>
