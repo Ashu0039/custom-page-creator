@@ -212,7 +212,6 @@ class Editor extends Component {
 
       fileReader.onload = () => {
           const image = fileReader.result;
-          console.log('got image --> ', image);
           const newElement = newImageElement(image);
           this.addNewElement({ element: newElement });
       };
@@ -320,17 +319,20 @@ class Editor extends Component {
       case HEADING:
         this.addHeading();
         break;
+      case IMAGE:
+        console.log('added a new image');
+        this.refs.imageFileInput.click();
+        break;
       default:
     }
-
-    this.setState({ elementDragged: null });
   }
 
   elementDropped = (elementDroppedAt) => {
     const { dropZone, rowPos, columnPos } = elementDroppedAt;
     if (dropZone) {
       this.addDroppedElement();
-    } else if(rowPos && columnPos) {
+    } else if(rowPos >= 0 && columnPos >= 0) {
+      console.log('adding element at pos --> ', rowPos, columnPos);
       this.setState({ addingElementAtPos: elementDroppedAt }, () => this.addDroppedElement());
     }
   }
@@ -340,6 +342,7 @@ class Editor extends Component {
   }
 
   dragEndHappened = () => {
+    console.log('drag end happened, resetting element dragged var');
     this.setState({ elementDragged: null });
   }
 
@@ -379,6 +382,7 @@ class Editor extends Component {
             elementDragged && <DropZone elementDropped={this.elementDropped} elementIsDraggedOver={this.elementIsDraggedOver} />
           }
           <Overlay show={showAddRow || showAddElement || showEditingElement} overlayClicked={() => this.overlayClicked()} />
+          <input style={{ display: 'none' }} ref="imageFileInput" id="upload-image" type="file" accept="image/x-png,image/gif,image/jpeg" onChange={(e) => this.addImage(e.target.files)} />
         </div>
       </EditorContext.Provider>
     );
