@@ -81,7 +81,10 @@ class Editor extends Component {
     this.setState({ showAddElement: !showAddElement });
   }
 
-  closeAddElement = () => this.setState({ showAddElement: false })
+  closeAddElement = () => {
+    this.setState({ showAddElement: false })
+    return true;
+  }
 
   overlayClicked = () => {
     const { showAddRow, showAddElement, showEditingElement } = this.state;
@@ -189,6 +192,7 @@ class Editor extends Component {
   }
 
   addHeading = () => {
+    console.log('add new heading element');
     const newElement = newHeadingElement();
 
     this.addNewElement({ element: newElement });
@@ -208,7 +212,6 @@ class Editor extends Component {
       
       fileReader.readAsDataURL(files[0]);
     }
-    this.closeAddElement();
   }
 
   addElementClicked = ({ rowPos, columnPos }) => {
@@ -350,7 +353,7 @@ class Editor extends Component {
             open={showAddElement}
             closeAddElement={this.toggleAddElement}
             addHeading={() => this.closeAddElement() && this.addHeading()}
-            addImage={this.addImage}
+            addImage={(imageFile) => this.closeAddElement() && this.addImage(imageFile)}
             elementDragged={this.elementDragged}
             dragEndHappened={this.dragEndHappened}
           />
