@@ -1,0 +1,9 @@
+#upload-image {
+  opacity: 0;
+  z-index: -1;
+  /* position: absolute; */
+}
+
+.option label {
+  cursor: pointer;
+}

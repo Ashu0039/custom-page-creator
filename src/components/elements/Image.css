@@ -1,4 +1,5 @@
 img.element {
   max-height: 200px;
-  max-width: 200px;
+  /* max-width: 200px; */
+  width: auto;
 }

@@ -5,7 +5,7 @@ import Rows from './Rows';
 import AddRow from './AddRow';
 import AddElement from './AddElement';
 import Overlay from './Overlay';
-import { HEADING, EMPTY } from '../element_types';
+import { HEADING, EMPTY, IMAGE } from '../element_types';
 import EditingElement from './EditingElement';
 
 const newId = () => {
@@ -16,8 +16,12 @@ const emptyElement = () => {
   return { type: EMPTY };
 }
 
-const newHeadingElement = () => {
-  return { type: HEADING, data: 'Heading' };
+const newHeadingElement = (data='Heading') => {
+  return { type: HEADING, data };
+}
+
+const newImageElement = (image) => {
+  return { type: IMAGE, data: image };
 }
 
 const emptyColumns = (noOfColumns) => {
@@ -192,8 +196,20 @@ class Editor extends Component {
     this.addNewElement({ element: newElement });
   } 
 
-  addImage = () => {
-    console.log('add image');
+  addImage = (files) => {
+    console.log('add image --> ', files);
+    if (FileReader && files && files.length) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+          const image = fileReader.result;
+          console.log('got image --> ', image);
+          const newElement = newImageElement(image);
+          this.addNewElement({ element: newElement });
+      };
+      
+      fileReader.readAsDataURL(files[0]);
+    }
     this.closeAddElement();
   }
 
