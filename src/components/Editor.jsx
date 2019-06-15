@@ -320,13 +320,16 @@ class Editor extends Component {
     this.setState({ addingElementAtPos: elementDroppedAt }, () => this.addDroppedElement());
   }
 
-  elementIsDraggedOver = (e) => {
-    // console.log('element is dragged over --> ', e);
-    e.preventDefault();
+  elementIsDraggedOver = ({ rowPos, columnPos }) => {
+    // set the position over which element drag is happening
+  }
+
+  dragEndHappened = () => {
+    this.setState({ elementDragged: null });
   }
 
   render() {
-    const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit } = this.state;
+    const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit, elementDragged } = this.state;
 
     return (
       <EditorContext.Provider
@@ -336,6 +339,7 @@ class Editor extends Component {
           deleteElementClicked: this.deleteElementClicked,
           elementDropped: this.elementDropped,
           elementIsDraggedOver: this.elementIsDraggedOver,
+          isElementDragged: !!elementDragged,
         }}
       >
         <div className="editor">
@@ -348,6 +352,7 @@ class Editor extends Component {
             addHeading={() => this.closeAddElement() && this.addHeading()}
             addImage={this.addImage}
             elementDragged={this.elementDragged}
+            dragEndHappened={this.dragEndHappened}
           />
           <EditingElement
             open={showEditingElement}

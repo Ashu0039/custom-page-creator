@@ -14,11 +14,15 @@ const EmptyElement = ({ rowPos, columnPos }) => (
   <EditorContext.Consumer>
     {
       ({
-        addElementClicked, elementDropped, elementIsDraggedOver,
+        addElementClicked, elementDropped, elementIsDraggedOver, isElementDragged,
       }) => (
-        <div className="element empty" onDrop={() => elementDropped({ rowPos, columnPos })} onDragOver={(e) => elementIsDraggedOver(e)}>
+        <div
+          className={`element empty ${isElementDragged ? 'element-dragged' : ''}`}
+          onDrop={() => elementDropped({ rowPos, columnPos })}
+          onDragOver={(e) => e.preventDefault() && elementIsDraggedOver({rowPos, columnPos})}
+        >
           <button onClick={() => addElementClicked({ rowPos, columnPos })}>
-            Add New Element
+            { isElementDragged ? 'Drop here' : 'Add New Element'}
           </button>
         </div>
       )
