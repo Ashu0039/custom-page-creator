@@ -66,6 +66,7 @@ class Editor extends Component {
     addingElementAtPos: null,
     showEditingElement: false,
     elementToEdit: null,
+    elementDragged: null,
   }
 
   toggleAddRow = () => {
@@ -188,9 +189,6 @@ class Editor extends Component {
   }
 
   addHeading = () => {
-    console.log('add heading');
-    this.toggleAddElement();
-
     const newElement = newHeadingElement();
 
     this.addNewElement({ element: newElement });
@@ -299,6 +297,34 @@ class Editor extends Component {
     this.deleteElementAtPos({ rowPos, columnPos });
   }
 
+  elementDragged = (elementType) => {
+    console.log('element is being dragged --> ', elementType);
+    this.setState({ elementDragged: elementType });
+    this.closeAddElement();
+  }
+
+  addDroppedElement = () => {
+    const { elementDragged } = this.state;
+
+    switch(elementDragged) {
+      case HEADING:
+        this.addHeading();
+        break;
+      default:
+    }
+
+    this.setState({ elementDragged: null });
+  }
+
+  elementDropped = (elementDroppedAt) => {
+    this.setState({ addingElementAtPos: elementDroppedAt }, () => this.addDroppedElement());
+  }
+
+  elementIsDraggedOver = (e) => {
+    // console.log('element is dragged over --> ', e);
+    e.preventDefault();
+  }
+
   render() {
     const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit } = this.state;
 
@@ -308,6 +334,8 @@ class Editor extends Component {
           addElementClicked: this.addElementClicked,
           editElementClicked: this.editElementClicked,
           deleteElementClicked: this.deleteElementClicked,
+          elementDropped: this.elementDropped,
+          elementIsDraggedOver: this.elementIsDraggedOver,
         }}
       >
         <div className="editor">
@@ -317,8 +345,9 @@ class Editor extends Component {
           <AddElement
             open={showAddElement}
             closeAddElement={this.toggleAddElement}
-            addHeading={this.addHeading}
+            addHeading={() => this.closeAddElement() && this.addHeading()}
             addImage={this.addImage}
+            elementDragged={this.elementDragged}
           />
           <EditingElement
             open={showEditingElement}

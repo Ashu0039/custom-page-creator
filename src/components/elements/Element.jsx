@@ -14,9 +14,9 @@ const EmptyElement = ({ rowPos, columnPos }) => (
   <EditorContext.Consumer>
     {
       ({
-        addElementClicked,
+        addElementClicked, elementDropped, elementIsDraggedOver,
       }) => (
-        <div className="element empty">
+        <div className="element empty" onDrop={() => elementDropped({ rowPos, columnPos })} onDragOver={(e) => elementIsDraggedOver(e)}>
           <button onClick={() => addElementClicked({ rowPos, columnPos })}>
             Add New Element
           </button>
