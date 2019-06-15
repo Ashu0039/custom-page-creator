@@ -11,7 +11,7 @@ const styles = {
 const DropZone = ({ elementDropped, elementIsDraggedOver }) => (
   <div style={styles} className="drop-zone" onDrop={() => elementDropped({ dropZone: true })}
     onDragOver={(e) => e.preventDefault() && elementIsDraggedOver({ dropZone: true })}>
-    Drop here
+    Drop here to create a new row for the element
   </div>
 );
 
