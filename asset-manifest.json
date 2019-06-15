@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/custom-page-creator/static/css/main.ff1646b1.chunk.css",
+    "main.js": "/custom-page-creator/static/js/main.67c2e681.chunk.js",
+    "main.js.map": "/custom-page-creator/static/js/main.67c2e681.chunk.js.map",
+    "runtime~main.js": "/custom-page-creator/static/js/runtime~main.38a29920.js",
+    "runtime~main.js.map": "/custom-page-creator/static/js/runtime~main.38a29920.js.map",
+    "static/js/2.d965be88.chunk.js": "/custom-page-creator/static/js/2.d965be88.chunk.js",
+    "static/js/2.d965be88.chunk.js.map": "/custom-page-creator/static/js/2.d965be88.chunk.js.map",
+    "index.html": "/custom-page-creator/index.html",
+    "precache-manifest.9b967d5f17e5e4ad6403eabd74355130.js": "/custom-page-creator/precache-manifest.9b967d5f17e5e4ad6403eabd74355130.js",
+    "service-worker.js": "/custom-page-creator/service-worker.js",
+    "static/css/main.ff1646b1.chunk.css.map": "/custom-page-creator/static/css/main.ff1646b1.chunk.css.map"
+  }
+}
