@@ -4,11 +4,12 @@
 
 .row {
   display: flex;
-  padding: 12px;
+  padding: 32px;
   justify-content: space-around;
   align-items: center;
   border: 2px solid transparent;
   border-radius: 3px;
+  position: relative;
 }
 
 .row:hover {
@@ -25,4 +26,33 @@
 
 .row .column:hover {
   border: 2px solid lightcoral;
+}
+
+.row:hover .row-options {
+  z-index: inherit;
+}
+
+.row .row-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: -1;
+  background: lightcoral;
+  color: white;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 3px 0 0 3px;
+}
+
+.row .row-options > svg {
+  padding: 0 8px;
+  border-right: 1px solid;
+}
+
+.row .row-options > svg:last-child {
+  border-right: none;
 }

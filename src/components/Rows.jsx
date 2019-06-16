@@ -2,6 +2,8 @@ import React from 'react';
 
 import Element from './elements/Element';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import './Rows.css';
 
 const Column = ({ column, ...rest }) => (
@@ -12,22 +14,29 @@ const Column = ({ column, ...rest }) => (
 
 const AddNewRow = ({ handleClick }) => (
   <div className="row add-new-row">
-    <button onClick={() => handleClick()}>Add new row</button>
+    <button className="custom-button" onClick={() => handleClick()}>Add new row</button>
   </div>
 );
 
-const Row = ({ row, pos }) => (
+const Row = ({ row, pos, deleteRow }) => (
   <div className="row">
     {
       row.columns.map((c, index) => <Column columnPos={index} rowPos={pos} column={c} key={c.id} />)
     }
+    <div className="row-options">
+      <FontAwesomeIcon
+        onClick={() => deleteRow(pos)}
+        title="Delete"
+        icon="trash"
+      />
+    </div>
   </div>
 );
 
-const Rows = ({ rows, showAddRow }) => (
+const Rows = ({ rows, showAddRow, deleteRow }) => (
   <div className="rows">
     {
-      rows.length > 0 ? rows.map((r, index) => <Row row={r} pos={index} key={r.id} />) : <AddNewRow handleClick={showAddRow} />
+      rows.length > 0 ? rows.map((r, index) => <Row deleteRow={deleteRow} row={r} pos={index} key={r.id} />) : <AddNewRow handleClick={showAddRow} />
     }
   </div>
 );

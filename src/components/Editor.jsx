@@ -346,6 +346,16 @@ class Editor extends Component {
     this.setState({ elementDragged: null });
   }
 
+  deleteRow = (rowPos) => {
+    console.log('delete row at pos --> ', rowPos);
+    if (rowPos > -1 && rowPos !== null) {
+      const { rows } = this.state;
+
+      const updatedRows = [...rows.slice(0, rowPos), ...rows.slice(rowPos + 1)];
+      this.setState({ rows: updatedRows });
+    }
+  }
+
   render() {
     const { showAddRow, showAddElement, rows, showEditingElement, elementToEdit, elementDragged } = this.state;
 
@@ -362,7 +372,7 @@ class Editor extends Component {
       >
         <div className="editor">
           <Toolbar addRowClicked={this.toggleAddRow} addElementClicked={this.toggleAddElement} />
-          <Rows rows={rows} showAddRow={this.toggleAddRow} />
+          <Rows rows={rows} showAddRow={this.toggleAddRow} deleteRow={this.deleteRow} />
           <AddRow open={showAddRow} closeAddRow={this.toggleAddRow} addRowWithColumns={this.addRowWithColumns} />
           <AddElement
             open={showAddElement}

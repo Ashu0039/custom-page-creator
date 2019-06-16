@@ -18,3 +18,24 @@
   width: 100%;
   background: white;
 }
+
+.custom-button {
+  cursor: pointer;
+  font-size: 16px;
+  background: lightcoral;
+  color: white;
+  border-radius: 3px;
+  padding: 6px 12px;
+  outline: none;
+  border: 1px solid lightcoral;
+  user-select: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.custom-button:hover {
+  background: white;
+  color: lightcoral;
+}

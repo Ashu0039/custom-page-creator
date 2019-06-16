@@ -21,7 +21,7 @@ const EmptyElement = ({ rowPos, columnPos }) => (
           onDrop={() => elementDropped({ rowPos, columnPos })}
           onDragOver={(e) => e.preventDefault() && elementIsDraggedOver({rowPos, columnPos})}
         >
-          <button onClick={() => addElementClicked({ rowPos, columnPos })}>
+          <button className="custom-button" onClick={() => addElementClicked({ rowPos, columnPos })}>
             { isElementDragged ? 'Drop here' : 'Add New Element'}
           </button>
         </div>
